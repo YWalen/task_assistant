@@ -25,7 +25,6 @@ class Task(RestoreEntity):
         "_attr_name",
         "_attr_state",
         "_due_date",
-        "icon",
         "_last_updated",
         "_overdue",
         "_overdue_days",
