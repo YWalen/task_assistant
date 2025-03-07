@@ -9,7 +9,8 @@
                     "icon": "Icon (mdi:broom) - optional",
                     "frequency": "Frequency - Unit to repeat task with",
                     "period": "Period - Number of frequency after which to repeat",
-                    "after_finished": "After Finished - Repeat task after finished instead of after start date"
+                    "after_finished": "After Finished - Repeat task after finished instead of after start date",
+                    "start_date": "Start date"
                 }
             }
         },
@@ -33,7 +34,8 @@
                     "icon": "Icon (mdi:broom) - optional",
                     "frequency": "Frequency - Unit to repeat task with",
                     "period": "Period - Number of frequency after which to repeat",
-                    "after_finished": "After Finished - Repeat task after finished instead of after start date"
+                    "after_finished": "After Finished - Repeat task after finished instead of after start date",
+                    "start_date": "Start date"
                 }
             }
         },

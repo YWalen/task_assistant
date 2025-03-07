@@ -78,6 +78,9 @@ def general_schema_definition(
                 step=1,
             )
         ),
+        optional(
+            constants.CONF_START_DATE, handler.options, None
+        ): selector.DateSelector(),
     }
 
     return schema

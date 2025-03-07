@@ -26,6 +26,7 @@ CONF_FREQUENCY = "frequency"
 CONF_PERIOD = "period"
 CONF_ICON = "icon"
 CONF_SENSORS = "sensors"
+CONF_START_DATE = "start_date"
 
 DEFAULT_NAME = DOMAIN
 DEFAULT_AFTER_FINISHED = True
