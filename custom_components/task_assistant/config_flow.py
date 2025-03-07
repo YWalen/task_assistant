@@ -100,16 +100,10 @@ async def general_options_schema(
     return vol.Schema(general_schema_definition(handler))
 
 CONFIG_FLOW: dict[str, SchemaFlowFormStep | SchemaFlowMenuStep] = {
-    "user": SchemaFlowFormStep(general_config_schema),
-    "detail": SchemaFlowFormStep(
-        detail_config_schema, validate_user_input=_validate_config
-    ),
+    "user": SchemaFlowFormStep(general_config_schema)
 }
 OPTIONS_FLOW: dict[str, SchemaFlowFormStep | SchemaFlowMenuStep] = {
-    "init": SchemaFlowFormStep(general_options_schema),
-    "detail": SchemaFlowFormStep(
-        detail_config_schema, validate_user_input=_validate_config
-    ),
+    "init": SchemaFlowFormStep(general_options_schema)
 }
 
 
