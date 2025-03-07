@@ -187,7 +187,6 @@ class Task(RestoreEntity):
         )
         event_data = {
             "entity_id": self.entity_id,
-            "due_date": helpers.dates_to_texts(self._due_date),
         }
         self.hass.bus.async_fire("task_helper_loaded", event_data)
         if not self._manual:
