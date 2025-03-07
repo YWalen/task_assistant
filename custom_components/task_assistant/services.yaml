@@ -1,0 +1,24 @@
+complete:
+  description: Set the last_completed attribute to the current date and time.
+  fields:
+    entity_id:
+      name: Entity
+      description: The task sensor entity_id.
+      example: sensor.sweep_floor
+      required: true
+      selector:
+        entity:
+          integration: task_assistant
+          domain: sensor
+update_state:
+  description: Update the entity state and attributes. Used with the manual_update option, do defer the update after changing the automatically created schedule by automation triggered by the task_assistant_loaded event.
+  fields:
+    entity_id:
+      name: Entity
+      description: The chore sensor entity_id.
+      example: sensor.sweep_floor
+      required: true
+      selector:
+        entity:
+          integration: task_assistant
+          domain: sensor
