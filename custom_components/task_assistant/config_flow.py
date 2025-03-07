@@ -7,7 +7,7 @@ from collections.abc import Mapping
 from typing import Any, cast
 
 import voluptuous as vol
-from homeassistant.const import ATTR_HIDDEN, CONF_NAME
+from homeassistant.const import CONF_NAME
 from homeassistant.core import callback
 from homeassistant.helpers import selector
 from homeassistant.helpers.schema_config_entry_flow import (
@@ -59,6 +59,9 @@ def general_schema_definition(
 ) -> Mapping[str, Any]:
     """Create general schema."""
     schema = {
+        required(
+            constants.CONF_ICON, handler.options, constants.DEFAULT_ICON
+        ): selector.IconSelector(),
         required(constants.CONF_AFTER_FINISHED, handler.options, constants.DEFAULT_AFTER_FINISHED,): bool,
         required(
             constants.CONF_FREQUENCY, handler.options, constants.DEFAULT_FREQUENCY
@@ -75,10 +78,6 @@ def general_schema_definition(
                 step=1,
             )
         ),
-        optional(
-            constants.CONF_ICON, handler.options, constants.DEFAULT_ICON
-        ): selector.IconSelector(),
-        optional(ATTR_HIDDEN, handler.options, False): bool,
     }
 
     return schema

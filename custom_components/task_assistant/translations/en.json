@@ -6,11 +6,10 @@
                 "description": "Enter the sensor name and configure sensor parameters. More info on https://github.com/ywalen/task_assistant",
                 "data": {
                     "name": "Friendly name",
-                    "hidden": "Hide in calendar",
+                    "icon": "Icon (mdi:broom) - optional",
                     "frequency": "Frequency - Unit to repeat task with",
                     "period": "Period - Number of frequency after which to repeat",
-                    "after_finished": "After Finished - Repeat task after finished instead of after start date",
-                    "icon": "Icon (mdi:broom) - optional"
+                    "after_finished": "After Finished - Repeat task after finished instead of after start date"
                 }
             }
         },
@@ -18,7 +17,6 @@
             "value": "Invalid value. Please check your input!",
             "icon": "Icons should be specified in the form 'prefix:name'.",
             "entities": "Entity does not exist!",
-            "month_day": "Invalid date format!",
             "period": "Period must be a number between 1 and 1000"
         },
         "abort": {
@@ -32,11 +30,10 @@
                 "description": "Enter the sensor name and configure sensor parameters. More info on https://github.com/ywalen/task_assistant",
                 "data": {
                     "name": "Friendly name",
-                    "hidden": "Hide in calendar",
+                    "icon": "Icon (mdi:broom) - optional",
                     "frequency": "Frequency - Unit to repeat task with",
                     "period": "Period - Number of frequency after which to repeat",
-                    "after_finished": "After Finished - Repeat task after finished instead of after start date",
-                    "icon": "Icon (mdi:broom) - optional"
+                    "after_finished": "After Finished - Repeat task after finished instead of after start date"
                 }
             }
         },
@@ -44,7 +41,6 @@
             "value": "Invalid value. Please check your input!",
             "icon": "Icons should be specified in the form 'prefix:name'.",
             "entities": "Entity does not exist!",
-            "month_day": "Invalid date format!",
             "period": "Period must be a number between 1 and 1000"
         }
     },

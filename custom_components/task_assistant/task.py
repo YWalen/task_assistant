@@ -9,15 +9,12 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     ATTR_DEVICE_CLASS,
     ATTR_UNIT_OF_MEASUREMENT,
-    ATTR_HIDDEN,
     CONF_NAME,
 )
 from homeassistant.helpers.restore_state import RestoreEntity
 
 from . import constants, helpers
 from .constants import LOGGER
-
-PLATFORMS: list[str] = [constants.CALENDAR_PLATFORM]
 
 
 class Task(RestoreEntity):
@@ -28,7 +25,6 @@ class Task(RestoreEntity):
         "_attr_name",
         "_attr_state",
         "_due_date",
-        "_hidden",
         "icon",
         "_last_updated",
         "_overdue",
@@ -52,7 +48,6 @@ class Task(RestoreEntity):
             if config_entry.title is not None
             else config.get(CONF_NAME)
         )
-        self._hidden = config.get(ATTR_HIDDEN, False)
         self._attr_icon = config.get(constants.CONF_ICON)
         self._last_updated: datetime | None = None
         self._overdue: bool = False
@@ -97,9 +92,6 @@ class Task(RestoreEntity):
         """When sensor is removed from HA, remove it and its calendar entity."""
         await super().async_will_remove_from_hass()
         del self.hass.data[constants.DOMAIN][constants.SENSOR_PLATFORM][self.entity_id]
-        self.hass.data[constants.DOMAIN][constants.CALENDAR_PLATFORM].remove_entity(
-            self.entity_id
-        )
 
     @property
     def unique_id(self) -> str:
@@ -127,11 +119,6 @@ class Task(RestoreEntity):
     def overdue_days(self) -> int | None:
         """Return overdue_days attribute."""
         return self._overdue_days
-
-    @property
-    def hidden(self) -> bool:
-        """Return the hidden attribute."""
-        return self._hidden
 
     @property
     def native_unit_of_measurement(self) -> str | None:

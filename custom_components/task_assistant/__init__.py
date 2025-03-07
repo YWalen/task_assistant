@@ -12,7 +12,6 @@ import homeassistant.helpers.config_validation as cv
 import homeassistant.util.dt as dt_util
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
-    ATTR_HIDDEN,
     CONF_ENTITY_ID,
 )
 from homeassistant.core import HomeAssistant, ServiceCall
@@ -35,7 +34,6 @@ SENSOR_SCHEMA = vol.Schema(
             vol.Coerce(int), vol.Range(min=1, max=1000)
         ),
         vol.Required(constants.CONF_AFTER_FINISHED): cv.boolean,
-        vol.Optional(ATTR_HIDDEN): cv.boolean,
     },
     extra=vol.ALLOW_EXTRA,
 )
