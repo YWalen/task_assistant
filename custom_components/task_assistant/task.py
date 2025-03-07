@@ -28,6 +28,7 @@ class Task(RestoreEntity):
         "_last_updated",
         "_overdue",
         "_overdue_days",
+        "_overdue_time",
         "_frequency",
         "_period",
         "_after_finished",
@@ -51,6 +52,7 @@ class Task(RestoreEntity):
         self._last_updated: datetime | None = None
         self._overdue: bool = False
         self._overdue_days: int | None = None
+        self._overdue_time: datetime | None = None
         self._frequency: str = config.get(constants.CONF_FREQUENCY)
         self._period: int = config.get(constants.CONF_PERIOD)
         self._after_finished: bool = config.get(constants.CONF_AFTER_FINISHED)
@@ -72,8 +74,8 @@ class Task(RestoreEntity):
             self._last_updated = None  # Unblock update - after options change
             self._attr_state = state.state
             next_due_date = (
-                helpers.parse_datetime(state.attributes[constants.ATTR_NEXT_DATE])
-                if constants.ATTR_NEXT_DATE in state.attributes
+                helpers.parse_datetime(state.attributes[constants.ATTR_DUE_DATE])
+                if constants.ATTR_DUE_DATE in state.attributes
                 else None
             )
             self._due_date = (
@@ -86,6 +88,7 @@ class Task(RestoreEntity):
             )
             self._overdue = state.attributes.get(constants.ATTR_OVERDUE, False)
             self._overdue_days = state.attributes.get(constants.ATTR_OVERDUE_DAYS, None)
+            self._overdue_time = state.attributes.get(constants.ATTR_OVERDUE_TIME, None)
 
     async def async_will_remove_from_hass(self) -> None:
         """When sensor is removed from HA, remove it and its calendar entity."""
@@ -120,6 +123,11 @@ class Task(RestoreEntity):
         return self._overdue_days
 
     @property
+    def overdue_time(self) -> int | None:
+        """Return overdue_times attribute."""
+        return self._overdue_time
+
+    @property
     def native_unit_of_measurement(self) -> str | None:
         """Return unit of measurement - None for numerical value."""
         return "day" if self._days == 1 else "days"
@@ -147,6 +155,7 @@ class Task(RestoreEntity):
             constants.ATTR_LAST_UPDATED: self.last_updated,
             constants.ATTR_OVERDUE: self.overdue,
             constants.ATTR_OVERDUE_DAYS: self.overdue_days,
+            constants.ATTR_OVERDUE_TIME: self.overdue_times,
             ATTR_UNIT_OF_MEASUREMENT: self.native_unit_of_measurement,
             # Needed for translations to work
             ATTR_DEVICE_CLASS: self.DEVICE_CLASS,
@@ -203,7 +212,8 @@ class Task(RestoreEntity):
                 self._due_date,
                 self._last_updated,
             )
-            self._days = (self.due_date - self._last_updated).days
+            self._overdue_time = self._due_date - self._last_updated
+            self._days = self._overdue_time.days
             LOGGER.debug(
                 "(%s) Found next task date: %s, that is in %d days",
                 self._attr_name,
@@ -218,6 +228,7 @@ class Task(RestoreEntity):
             self._attr_state = None
             self._overdue = False
             self._overdue_days = None
+            self._overdue_time = None
 
     def _add_period_offset(self, start_date: datetime, frequency: str, period: int) -> date:
         if frequency == "hours":
