@@ -14,10 +14,10 @@ from homeassistant.const import (
 )
 from homeassistant.helpers.restore_state import RestoreEntity
 
-from . import const, helpers
-from .const import LOGGER
+from . import constants, helpers
+from .constants import LOGGER
 
-PLATFORMS: list[str] = [const.CALENDAR_PLATFORM]
+PLATFORMS: list[str] = [constants.CALENDAR_PLATFORM]
 
 
 class Task(RestoreEntity):
@@ -53,17 +53,17 @@ class Task(RestoreEntity):
             else config.get(CONF_NAME)
         )
         self._hidden = config.get(ATTR_HIDDEN, False)
-        self._attr_icon = config.get(const.CONF_ICON)
+        self._attr_icon = config.get(constants.CONF_ICON)
         self._last_updated: datetime | None = None
         self._overdue: bool = False
         self._overdue_days: int | None = None
-        self._frequency: str = config.get(const.CONF_FREQUENCY)
-        self._period: int = config.get(const.CONF_PERIOD)
-        self._after_finished: bool = config.get(const.CONF_AFTER_FINISHED)
+        self._frequency: str = config.get(constants.CONF_FREQUENCY)
+        self._period: int = config.get(constants.CONF_PERIOD)
+        self._after_finished: bool = config.get(constants.CONF_AFTER_FINISHED)
         self._attr_state = self._days
         self._start_date: date
         try:
-            self._start_date = helpers.to_date(config.get(const.CONF_START_DATE))
+            self._start_date = helpers.to_date(config.get(constants.CONF_START_DATE))
         except ValueError:
             self._start_date = helpers.now()
         self.last_completed: datetime = self._start_date
@@ -71,33 +71,33 @@ class Task(RestoreEntity):
     async def async_added_to_hass(self) -> None:
         """When sensor is added to HA, restore state and add it to calendar."""
         await super().async_added_to_hass()
-        self.hass.data[const.DOMAIN][const.SENSOR_PLATFORM][self.entity_id] = self
+        self.hass.data[constants.DOMAIN][constants.SENSOR_PLATFORM][self.entity_id] = self
 
         # Restore stored state
         if (state := await self.async_get_last_state()) is not None:
             self._last_updated = None  # Unblock update - after options change
             self._attr_state = state.state
             next_due_date = (
-                helpers.parse_datetime(state.attributes[const.ATTR_NEXT_DATE])
-                if const.ATTR_NEXT_DATE in state.attributes
+                helpers.parse_datetime(state.attributes[constants.ATTR_NEXT_DATE])
+                if constants.ATTR_NEXT_DATE in state.attributes
                 else None
             )
             self._due_date = (
                 None if next_due_date is None else next_due_date
             )
             self.last_completed = (
-                helpers.parse_datetime(state.attributes[const.ATTR_LAST_COMPLETED])
-                if const.ATTR_LAST_COMPLETED in state.attributes
+                helpers.parse_datetime(state.attributes[constants.ATTR_LAST_COMPLETED])
+                if constants.ATTR_LAST_COMPLETED in state.attributes
                 else None
             )
-            self._overdue = state.attributes.get(const.ATTR_OVERDUE, False)
-            self._overdue_days = state.attributes.get(const.ATTR_OVERDUE_DAYS, None)
+            self._overdue = state.attributes.get(constants.ATTR_OVERDUE, False)
+            self._overdue_days = state.attributes.get(constants.ATTR_OVERDUE_DAYS, None)
 
     async def async_will_remove_from_hass(self) -> None:
         """When sensor is removed from HA, remove it and its calendar entity."""
         await super().async_will_remove_from_hass()
-        del self.hass.data[const.DOMAIN][const.SENSOR_PLATFORM][self.entity_id]
-        self.hass.data[const.DOMAIN][const.CALENDAR_PLATFORM].remove_entity(
+        del self.hass.data[constants.DOMAIN][constants.SENSOR_PLATFORM][self.entity_id]
+        self.hass.data[constants.DOMAIN][constants.CALENDAR_PLATFORM].remove_entity(
             self.entity_id
         )
 
@@ -157,10 +157,10 @@ class Task(RestoreEntity):
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return the state attributes."""
         return {
-            const.ATTR_LAST_COMPLETED: self.last_completed,
-            const.ATTR_LAST_UPDATED: self.last_updated,
-            const.ATTR_OVERDUE: self.overdue,
-            const.ATTR_OVERDUE_DAYS: self.overdue_days,
+            constants.ATTR_LAST_COMPLETED: self.last_completed,
+            constants.ATTR_LAST_UPDATED: self.last_updated,
+            constants.ATTR_OVERDUE: self.overdue,
+            constants.ATTR_OVERDUE_DAYS: self.overdue_days,
             ATTR_UNIT_OF_MEASUREMENT: self.native_unit_of_measurement,
             # Needed for translations to work
             ATTR_DEVICE_CLASS: self.DEVICE_CLASS,
@@ -169,7 +169,7 @@ class Task(RestoreEntity):
     @property
     def DEVICE_CLASS(self) -> str:  # pylint: disable=C0103
         """Return the class of the sensor."""
-        return const.DEVICE_CLASS
+        return constants.DEVICE_CLASS
 
     def __repr__(self) -> str:
         """Return main sensor parameters."""

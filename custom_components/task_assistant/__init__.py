@@ -21,20 +21,20 @@ import voluptuous as vol
 from . import constants, helpers
 from .constants import LOGGER
 
-PLATFORMS: list[str] = [const.SENSOR_PLATFORM]
+PLATFORMS: list[str] = [constants.SENSOR_PLATFORM]
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
 
-frequencies = [f["value"] for f in const.FREQUENCY_OPTIONS]
+frequencies = [f["value"] for f in constants.FREQUENCY_OPTIONS]
 
 SENSOR_SCHEMA = vol.Schema(
     {
-        vol.Required(const.CONF_ICON): cv.icon,
-        vol.Required(const.CONF_FREQUENCY): vol.In(frequencies),
-        vol.Required(const.CONF_PERIOD): vol.All(
+        vol.Required(constants.CONF_ICON): cv.icon,
+        vol.Required(constants.CONF_FREQUENCY): vol.In(frequencies),
+        vol.Required(constants.CONF_PERIOD): vol.All(
             vol.Coerce(int), vol.Range(min=1, max=1000)
         ),
-        vol.Required(const.CONF_AFTER_FINISHED): cv.boolean,
+        vol.Required(constants.CONF_AFTER_FINISHED): cv.boolean,
         vol.Optional(ATTR_HIDDEN): cv.boolean,
     },
     extra=vol.ALLOW_EXTRA,
@@ -42,8 +42,8 @@ SENSOR_SCHEMA = vol.Schema(
 
 CONFIG_SCHEMA = vol.Schema(
     {
-        const.DOMAIN: vol.Schema(
-            {vol.Optional(const.CONF_SENSORS): vol.All(cv.ensure_list, [SENSOR_SCHEMA])}
+        constants.DOMAIN: vol.Schema(
+            {vol.Optional(constants.CONF_SENSORS): vol.All(cv.ensure_list, [SENSOR_SCHEMA])}
         )
     },
     extra=vol.ALLOW_EXTRA,
@@ -71,7 +71,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
         entity_id = call.data.get(CONF_ENTITY_ID, "")
         LOGGER.debug("called update_state for %s", entity_id)
         try:
-            entity = hass.data[const.DOMAIN][const.SENSOR_PLATFORM][entity_id]
+            entity = hass.data[constants.DOMAIN][constants.SENSOR_PLATFORM][entity_id]
             entity.update_state()
         except KeyError as err:
             LOGGER.error("Failed updating state for %s - %s", entity_id, err)
@@ -81,7 +81,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
         entity_id = call.data.get(CONF_ENTITY_ID, "")
         LOGGER.debug("called complete for %s", entity_id)
         try:
-            entity = hass.data[const.DOMAIN][const.SENSOR_PLATFORM][entity_id]
+            entity = hass.data[constants.DOMAIN][constants.SENSOR_PLATFORM][entity_id]
             entity.last_completed = dt_util.as_local(helpers.now())
             entity.update_state()
         except KeyError as err:
@@ -89,16 +89,16 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
                 "Failed setting last completed for %s - %s", entity_id, err
             )
 
-    hass.data.setdefault(const.DOMAIN, {})
-    hass.data[const.DOMAIN].setdefault(const.SENSOR_PLATFORM, {})
+    hass.data.setdefault(constants.DOMAIN, {})
+    hass.data[constants.DOMAIN].setdefault(constants.SENSOR_PLATFORM, {})
     hass.services.async_register(
-        const.DOMAIN,
+        constants.DOMAIN,
         "update_state",
         handle_update_state,
         schema=UPDATE_STATE_SCHEMA,
     )
     hass.services.async_register(
-        const.DOMAIN,
+        constants.DOMAIN,
         "complete",
         handle_complete_task,
         schema=COMPLETE_NOW_SCHEMA,
@@ -111,7 +111,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     LOGGER.debug(
         "Setting %s (%s) from ConfigFlow",
         config_entry.title,
-        config_entry.options[const.CONF_FREQUENCY],
+        config_entry.options[constants.CONF_FREQUENCY],
     )
     config_entry.add_update_listener(update_listener)
 
@@ -124,7 +124,7 @@ async def async_remove_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
     """Handle removal of an entry."""
     try:
         await hass.config_entries.async_forward_entry_unload(
-            config_entry, const.SENSOR_PLATFORM
+            config_entry, constants.SENSOR_PLATFORM
         )
         LOGGER.info("Successfully removed sensor from the chore_helper integration")
     except ValueError:
@@ -137,7 +137,7 @@ async def async_reload_entry(hass, entry):
 
 async def update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Update listener - to re-create device after options update."""
-    await hass.config_entries.async_forward_entry_unload(entry, const.SENSOR_PLATFORM)
+    await hass.config_entries.async_forward_entry_unload(entry, constants.SENSOR_PLATFORM)
     hass.async_add_job(
-        hass.config_entries.async_forward_entry_setup(entry, const.SENSOR_PLATFORM)
+        hass.config_entries.async_forward_entry_setup(entry, constants.SENSOR_PLATFORM)
     )

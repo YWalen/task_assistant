@@ -59,14 +59,14 @@ def general_schema_definition(
 ) -> Mapping[str, Any]:
     """Create general schema."""
     schema = {
-        required(const.CONF_AFTER_FINISHED, handler.options, const.DEFAULT_AFTER_FINISHED,): bool,
+        required(constants.CONF_AFTER_FINISHED, handler.options, constants.DEFAULT_AFTER_FINISHED,): bool,
         required(
-            const.CONF_FREQUENCY, handler.options, const.DEFAULT_FREQUENCY
+            constants.CONF_FREQUENCY, handler.options, constants.DEFAULT_FREQUENCY
         ): selector.SelectSelector(
-            selector.SelectSelectorConfig(options=const.FREQUENCY_OPTIONS)
+            selector.SelectSelectorConfig(options=constants.FREQUENCY_OPTIONS)
         ),
         required(
-            const.CONF_PERIOD, handler.options, const.DEFAULT_PERIOD
+            constants.CONF_PERIOD, handler.options, constants.DEFAULT_PERIOD
         ): selector.NumberSelector(
             selector.NumberSelectorConfig(
                 min=1,
@@ -76,7 +76,7 @@ def general_schema_definition(
             )
         ),
         optional(
-            const.CONF_ICON, handler.options, const.DEFAULT_ICON
+            constants.CONF_ICON, handler.options, constants.DEFAULT_ICON
         ): selector.IconSelector(),
         optional(ATTR_HIDDEN, handler.options, False): bool,
     }
@@ -114,12 +114,12 @@ OPTIONS_FLOW: dict[str, SchemaFlowFormStep | SchemaFlowMenuStep] = {
 
 
 # mypy: ignore-errors
-class TaskHelperConfigFlowHandler(SchemaConfigFlowHandler, domain=const.DOMAIN):
+class TaskHelperConfigFlowHandler(SchemaConfigFlowHandler, domain=constants.DOMAIN):
     """Handle a config or options flow for Task Helper."""
 
     config_flow = CONFIG_FLOW
     options_flow = OPTIONS_FLOW
-    VERSION = const.CONFIG_VERSION
+    VERSION = constants.CONFIG_VERSION
 
     @callback
     def async_config_entry_title(self, options: Mapping[str, Any]) -> str:

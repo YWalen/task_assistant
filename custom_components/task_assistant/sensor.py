@@ -9,7 +9,7 @@ from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from . import const
+from . import constants
 from .task import Task
 from .constants import LOGGER
 
