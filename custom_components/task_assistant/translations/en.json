@@ -1,0 +1,73 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Task",
+                "description": "Enter the sensor name and configure sensor parameters. More info on https://github.com/ywalen/task_assistant",
+                "data": {
+                    "name": "Friendly name",
+                    "hidden": "Hide in calendar",
+                    "frequency": "Frequency - Unit to repeat task with",
+                    "period": "Period - Number of frequency after which to repeat",
+                    "after_finished": "After Finished - Repeat task after finished instead of after start date",
+                    "icon": "Icon (mdi:broom) - optional"
+                }
+            }
+        },
+        "error": {
+            "value": "Invalid value. Please check your input!",
+            "icon": "Icons should be specified in the form 'prefix:name'.",
+            "entities": "Entity does not exist!",
+            "month_day": "Invalid date format!",
+            "period": "Period must be a number between 1 and 1000"
+        },
+        "abort": {
+            "single_instance_allowed": "Only a single configuration of Task Assistant is allowed."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Task",
+                "description": "Enter the sensor name and configure sensor parameters. More info on https://github.com/ywalen/task_assistant",
+                "data": {
+                    "name": "Friendly name",
+                    "hidden": "Hide in calendar",
+                    "frequency": "Frequency - Unit to repeat task with",
+                    "period": "Period - Number of frequency after which to repeat",
+                    "after_finished": "After Finished - Repeat task after finished instead of after start date",
+                    "icon": "Icon (mdi:broom) - optional"
+                }
+            }
+        },
+        "error": {
+            "value": "Invalid value. Please check your input!",
+            "icon": "Icons should be specified in the form 'prefix:name'.",
+            "entities": "Entity does not exist!",
+            "month_day": "Invalid date format!",
+            "period": "Period must be a number between 1 and 1000"
+        }
+    },
+    "services": {
+        "complete": {
+            "name": "Complete",
+            "description": "Set the last_completed attribute to the current date and time.",
+            "fields": {
+                "entity_id": {
+                    "name": "Entity ID",
+                    "description": "The task sensor entity_id"
+                }
+            }
+        },
+        "update_state": {
+            "name": "Update state",
+            "description": "Update the entity state and attributes. Used with the manual_update option, do defer the update after changing the automatically created schedule by automation triggered by the task_assistant_loaded event.",
+            "fields": {
+                "entity_id": {
+                    "name": "Entity ID",
+                    "description": "The task sensor entity_id"
+                }
+            }
+        }
+    }
+}
