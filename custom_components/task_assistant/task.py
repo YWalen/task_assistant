@@ -189,8 +189,7 @@ class Task(RestoreEntity):
             "entity_id": self.entity_id,
         }
         self.hass.bus.async_fire("task_helper_loaded", event_data)
-        if not self._manual:
-            self.update_state()
+        self.update_state()
 
     def update_state(self) -> None:
         """Pick the first event from task dates, update attributes."""
