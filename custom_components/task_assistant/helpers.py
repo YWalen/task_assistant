@@ -13,7 +13,7 @@ from dateutil.parser import ParserError, parse
 
 def now() -> datetime:
     """Return current date and time. Needed for testing."""
-    return dt_util.now()
+    return dt_util.now().replace(tzinfo=None)
 
 
 def to_date(day: Any) -> date:

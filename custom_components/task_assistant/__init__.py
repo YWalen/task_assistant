@@ -80,7 +80,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
         LOGGER.debug("called complete for %s", entity_id)
         try:
             entity = hass.data[constants.DOMAIN][constants.SENSOR_PLATFORM][entity_id]
-            entity.last_completed = dt_util.as_local(helpers.now())
+            entity.complete_task()
             entity.update_state()
         except KeyError as err:
             LOGGER.error(

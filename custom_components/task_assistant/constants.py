@@ -15,6 +15,7 @@ ATTR_LAST_UPDATED = "last_updated"
 ATTR_OVERDUE = "overdue"
 ATTR_OVERDUE_TIME = "overdue_time"
 ATTR_OVERDUE_DAYS = "overdue_days"
+ATTR_START_DATE = "start_date"
 
 BINARY_SENSOR_DEVICE_CLASS = "connectivity"
 DEVICE_CLASS = "task_assistant__schedule"

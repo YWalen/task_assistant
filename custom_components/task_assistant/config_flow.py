@@ -80,7 +80,7 @@ def general_schema_definition(
         ),
         optional(
             constants.CONF_START_DATE, handler.options, None
-        ): selector.DateSelector(),
+        ): selector.DateTimeSelector(),
     }
 
     return schema

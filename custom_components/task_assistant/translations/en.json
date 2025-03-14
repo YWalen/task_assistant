@@ -6,7 +6,7 @@
                 "description": "Enter the sensor name and configure sensor parameters. More info on https://github.com/ywalen/task_assistant",
                 "data": {
                     "name": "Friendly name",
-                    "icon": "Icon (mdi:broom) - optional",
+                    "icon": "Icon (mdi:broom)",
                     "frequency": "Frequency - Unit to repeat task with",
                     "period": "Period - Number of frequency after which to repeat",
                     "after_finished": "After Finished - Repeat task after finished instead of after start date",
@@ -31,7 +31,7 @@
                 "description": "Enter the sensor name and configure sensor parameters. More info on https://github.com/ywalen/task_assistant",
                 "data": {
                     "name": "Friendly name",
-                    "icon": "Icon (mdi:broom) - optional",
+                    "icon": "Icon (mdi:broom)",
                     "frequency": "Frequency - Unit to repeat task with",
                     "period": "Period - Number of frequency after which to repeat",
                     "after_finished": "After Finished - Repeat task after finished instead of after start date",
