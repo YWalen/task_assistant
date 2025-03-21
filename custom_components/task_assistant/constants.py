@@ -23,19 +23,29 @@ SENSOR_PLATFORM = "sensor"
 
 CONF_SENSOR = "sensor"
 CONF_ENABLED = "enabled"
-CONF_AFTER_FINISHED = "after_finished"
+CONF_TYPE = "type"
 CONF_FREQUENCY = "frequency"
 CONF_PERIOD = "period"
 CONF_ICON = "icon"
 CONF_SENSORS = "sensors"
 CONF_START_DATE = "start_date"
+CONF_SCHEDULE = "schedule"
+CONF_SCHEDULE_DAY = "schedule_day"
 
 DEFAULT_NAME = DOMAIN
-DEFAULT_AFTER_FINISHED = True
+DEFAULT_TYPE = "after"
 DEFAULT_FREQUENCY = "days"
 DEFAULT_PERIOD = 1
+DEFAULT_SCHEDULE = 1
+DEFAULT_SCHEDULE_DAY = 0
 DEFAULT_ICON = "mdi:calendar"
 ICON = DEFAULT_ICON
+
+TYPE_OPTIONS = [
+    selector.SelectOptionDict(value="after", label="After"),
+    selector.SelectOptionDict(value="every", label="Every"),
+    selector.SelectOptionDict(value="scheduled", label="Scheduled"),
+]
 
 FREQUENCY_OPTIONS = [
     selector.SelectOptionDict(value="hours", label="Hours"),
@@ -45,15 +55,14 @@ FREQUENCY_OPTIONS = [
     selector.SelectOptionDict(value="years", label="Years"),
 ]
 
-WEEKDAY_OPTIONS = [
-    selector.SelectOptionDict(value="0", label="None"),
-    selector.SelectOptionDict(value="mon", label="Monday"),
-    selector.SelectOptionDict(value="tue", label="Tuesday"),
-    selector.SelectOptionDict(value="wed", label="Wednesday"),
-    selector.SelectOptionDict(value="thu", label="Thursday"),
-    selector.SelectOptionDict(value="fri", label="Friday"),
-    selector.SelectOptionDict(value="sat", label="Saturday"),
-    selector.SelectOptionDict(value="sun", label="Sunday"),
+DAY_OPTIONS = [
+    selector.SelectOptionDict(value=0, label="Monday"),
+    selector.SelectOptionDict(value=1, label="Tuesday"),
+    selector.SelectOptionDict(value=2, label="Wednesday"),
+    selector.SelectOptionDict(value=3, label="Thursday"),
+    selector.SelectOptionDict(value=4, label="Friday"),
+    selector.SelectOptionDict(value=5, label="Saturday"),
+    selector.SelectOptionDict(value=6, label="Sunday"),
 ]
 
 MONTH_OPTIONS = [
@@ -71,15 +80,14 @@ MONTH_OPTIONS = [
     selector.SelectOptionDict(value="dec", label="December"),
 ]
 
-ORDER_OPTIONS = [
-    selector.SelectOptionDict(value="0", label="None"),
-    selector.SelectOptionDict(value="1", label="1st"),
-    selector.SelectOptionDict(value="2", label="2nd"),
-    selector.SelectOptionDict(value="3", label="3rd"),
-    selector.SelectOptionDict(value="4", label="4th"),
-    selector.SelectOptionDict(value="5", label="5th"),
-    selector.SelectOptionDict(value="-1", label="last"),
-    selector.SelectOptionDict(value="-2", label="2nd from last"),
-    selector.SelectOptionDict(value="-3", label="3rd from last"),
-    selector.SelectOptionDict(value="-4", label="4th from last"),
+SCHEDULE_OPTIONS = [
+    selector.SelectOptionDict(value=1, label="1st"),
+    selector.SelectOptionDict(value=2, label="2nd"),
+    selector.SelectOptionDict(value=3, label="3rd"),
+    selector.SelectOptionDict(value=4, label="4th"),
+    selector.SelectOptionDict(value=5, label="5th"),
+    selector.SelectOptionDict(value=-1, label="last"),
+    selector.SelectOptionDict(value=-2, label="2nd from last"),
+    selector.SelectOptionDict(value=-3, label="3rd from last"),
+    selector.SelectOptionDict(value=-4, label="4th from last"),
 ]

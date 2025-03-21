@@ -31,7 +31,7 @@ class Task(RestoreEntity):
         "_overdue_days",
         "_frequency",
         "_period",
-        "_after_finished",
+        "_type",
         "_start_date",
         "config_entry",
     )
@@ -53,7 +53,9 @@ class Task(RestoreEntity):
         self._overdue_days: int | None = None
         self._frequency: str = config.get(constants.CONF_FREQUENCY)
         self._period: int = config.get(constants.CONF_PERIOD)
-        self._after_finished: bool = config.get(constants.CONF_AFTER_FINISHED)
+        self._type: str = config.get(constants.CONF_TYPE)
+        self._schedule: int | None = config.get(constants.CONF_SCHEDULE)
+        self._schedule_day: int | None = config.get(constants.CONF_SCHEDULE_DAY)
         self._attr_state = self._days
         self._start_date: datetime
         try:
@@ -171,14 +173,41 @@ class Task(RestoreEntity):
             f"attributes={self.extra_state_attributes})"
         )
 
+    def get_nth_weekday_of_month(self, year, month, weekday, nth):
+        """
+        Finds the date of the nth occurrence of a weekday in a specific month and year.
+        """
+        # Start from the first day of the month
+        first_day = date(year, month, 1)
+        # Calculate the first occurrence of the target weekday
+        days_to_weekday = (weekday - first_day.weekday() + 7) % 7
+        first_occurrence = first_day + timedelta(days=days_to_weekday)
+        # Calculate the nth occurrence
+        nth_occurrence = first_occurrence + timedelta(weeks=nth - 1)
+
+        # Check if the nth occurrence is still in the same month
+        if nth_occurrence.month != month:
+            return None  # That nth weekday does not exist in this month
+        return nth_occurrence
+
     def get_next_due_date(self) -> datetime | None:
         """Get next date from self._due_dates."""
-        if self._after_finished:
+        if self._type == "after":
             return self._add_period_offset(self._last_completed, self._frequency, self._period)
-        else:
+        elif self._type == "every":
             while self._last_completed > self._start_date:
                 self._start_date = self._add_period_offset(self._start_date, self._frequency, self._period)
             return self._add_period_offset(self._start_date, self._frequency, self._period)
+        elif self._type == "scheduled":
+            year = self._last_completed.year
+            month = self._last_completed.month
+            due_date = self.get_nth_weekday_of_month(year, month, self._schedule_day, self._schedule)
+            while due_date and due_date <= helpers.now():
+                # If due date has passed or doesn't exist, move to next month
+                year = year + (1 if month == 12 else 0)
+                month = 1 if month == 12 else month + 1
+                return self.get_nth_weekday_of_month(year, month, self._schedule_day, self._schedule)
+            return due_date
 
     def complete_task(self):
         self._last_completed = helpers.now()
@@ -228,7 +257,7 @@ class Task(RestoreEntity):
             self._overdue = False
             self._overdue_days = None
 
-    def _add_period_offset(self, start_date: datetime, frequency: str, period: int) -> date:
+    def _add_period_offset(self, start_date: datetime, frequency: str, period: int) -> datetime:
         if frequency == "hours":
             return start_date + timedelta(hours=period)
         elif frequency == "days":

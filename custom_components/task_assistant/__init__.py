@@ -25,6 +25,9 @@ PLATFORMS: list[str] = [constants.SENSOR_PLATFORM]
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
 
 frequencies = [f["value"] for f in constants.FREQUENCY_OPTIONS]
+types = [f["value"] for f in constants.TYPE_OPTIONS]
+schedules = [f["value"] for f in constants.SCHEDULE_OPTIONS]
+days = [f["value"] for f in constants.DAY_OPTIONS]
 
 SENSOR_SCHEMA = vol.Schema(
     {
@@ -33,7 +36,9 @@ SENSOR_SCHEMA = vol.Schema(
         vol.Required(constants.CONF_PERIOD): vol.All(
             vol.Coerce(int), vol.Range(min=1, max=1000)
         ),
-        vol.Required(constants.CONF_AFTER_FINISHED): cv.boolean,
+        vol.Required(constants.CONF_TYPE): vol.In(types),
+        vol.Required(constants.CONF_SCHEDULE): vol.In(schedules),
+        vol.Required(constants.CONF_SCHEDULE_DAY): vol.In(days),
     },
     extra=vol.ALLOW_EXTRA,
 )

@@ -62,7 +62,9 @@ def general_schema_definition(
         required(
             constants.CONF_ICON, handler.options, constants.DEFAULT_ICON
         ): selector.IconSelector(),
-        required(constants.CONF_AFTER_FINISHED, handler.options, constants.DEFAULT_AFTER_FINISHED,): bool,
+        required(constants.CONF_TYPE, handler.options, constants.DEFAULT_TYPE): selector.SelectSelector(
+            selector.SelectSelectorConfig(options=constants.TYPE_OPTIONS)
+        ),
         required(
             constants.CONF_FREQUENCY, handler.options, constants.DEFAULT_FREQUENCY
         ): selector.SelectSelector(
@@ -81,6 +83,16 @@ def general_schema_definition(
         optional(
             constants.CONF_START_DATE, handler.options, None
         ): selector.DateTimeSelector(),
+        optional(
+            constants.CONF_SCHEDULE, handler.options, constants.DEFAULT_SCHEDULE
+        ): selector.SelectSelector(
+            selector.SelectSelectorConfig(options=constants.SCHEDULE_OPTIONS)
+        ),
+        optional(
+            constants.CONF_SCHEDULE_DAY, handler.options, constants.DEFAULT_SCHEDULE_DAY
+        ): selector.SelectSelector(
+            selector.SelectSelectorConfig(options=constants.DAY_OPTIONS)
+        ),
     }
 
     return schema

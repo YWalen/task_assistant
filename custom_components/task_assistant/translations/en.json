@@ -9,7 +9,8 @@
                     "icon": "Icon (mdi:broom)",
                     "frequency": "Frequency - Unit to repeat task with",
                     "period": "Period - Number of frequency after which to repeat",
-                    "after_finished": "After Finished - Repeat task after finished instead of after start date",
+                    "type": "Type - Every (repeat every [period] number of [frequency], After (set due date [period] number of [frequency] after last completion, Scheduled - Schedule task based on month and week.",
+                    "schedule": "Schedule - Weekday of month to repeat",
                     "start_date": "Start date"
                 }
             }
@@ -34,7 +35,8 @@
                     "icon": "Icon (mdi:broom)",
                     "frequency": "Frequency - Unit to repeat task with",
                     "period": "Period - Number of frequency after which to repeat",
-                    "after_finished": "After Finished - Repeat task after finished instead of after start date",
+                    "type": "Type - Every (repeat every [period] number of [frequency], After (set due date [period] number of [frequency] after last completion, Scheduled - Schedule task based on month and week.",
+                    "schedule": "Schedule - Weekday of month to repeat",
                     "start_date": "Start date"
                 }
             }
