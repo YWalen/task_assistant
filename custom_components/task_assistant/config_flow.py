@@ -80,7 +80,7 @@ def general_schema_definition(
                 step=1,
             )
         ),
-        optional(
+        required(
             constants.CONF_START_DATE, handler.options, None
         ): selector.DateTimeSelector(),
         optional(
@@ -92,6 +92,16 @@ def general_schema_definition(
             constants.CONF_SCHEDULE_DAY, handler.options, constants.DEFAULT_SCHEDULE_DAY
         ): selector.SelectSelector(
             selector.SelectSelectorConfig(options=constants.DAY_OPTIONS)
+        ),
+        required(
+            constants.CONF_OFFSET, handler.options, constants.DEFAULT_OFFSET
+        ): selector.NumberSelector(
+            selector.NumberSelectorConfig(
+                min=-30,
+                max=30,
+                mode=selector.NumberSelectorMode.BOX,
+                step=1,
+            )
         ),
     }
 

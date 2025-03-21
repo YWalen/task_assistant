@@ -39,6 +39,9 @@ SENSOR_SCHEMA = vol.Schema(
         vol.Required(constants.CONF_TYPE): vol.In(types),
         vol.Required(constants.CONF_SCHEDULE): vol.In(schedules),
         vol.Required(constants.CONF_SCHEDULE_DAY): vol.In(days),
+        vol.Required(constants.CONF_OFFSET): vol.All(
+            vol.Coerce(int), vol.Range(min=-30, max=30)
+        ),
     },
     extra=vol.ALLOW_EXTRA,
 )

@@ -23,11 +23,9 @@ def to_date(day: Any) -> date:
     """
     if day is None:
         raise ValueError
-    if isinstance(day, date):
-        return day
     if isinstance(day, datetime):
         return day.date()
-    return date.fromisoformat(day)
+    return datetime.fromisoformat(day)
 
 
 def parse_datetime(text: str) -> datetime | None:

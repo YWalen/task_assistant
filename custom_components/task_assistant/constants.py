@@ -31,14 +31,16 @@ CONF_SENSORS = "sensors"
 CONF_START_DATE = "start_date"
 CONF_SCHEDULE = "schedule"
 CONF_SCHEDULE_DAY = "schedule_day"
+CONF_OFFSET = "offset"
 
 DEFAULT_NAME = DOMAIN
 DEFAULT_TYPE = "after"
 DEFAULT_FREQUENCY = "days"
 DEFAULT_PERIOD = 1
-DEFAULT_SCHEDULE = 1
-DEFAULT_SCHEDULE_DAY = 0
+DEFAULT_SCHEDULE = "1"
+DEFAULT_SCHEDULE_DAY = "0"
 DEFAULT_ICON = "mdi:calendar"
+DEFAULT_OFFSET = 0
 ICON = DEFAULT_ICON
 
 TYPE_OPTIONS = [
@@ -56,13 +58,13 @@ FREQUENCY_OPTIONS = [
 ]
 
 DAY_OPTIONS = [
-    selector.SelectOptionDict(value=0, label="Monday"),
-    selector.SelectOptionDict(value=1, label="Tuesday"),
-    selector.SelectOptionDict(value=2, label="Wednesday"),
-    selector.SelectOptionDict(value=3, label="Thursday"),
-    selector.SelectOptionDict(value=4, label="Friday"),
-    selector.SelectOptionDict(value=5, label="Saturday"),
-    selector.SelectOptionDict(value=6, label="Sunday"),
+    selector.SelectOptionDict(value="0", label="Monday"),
+    selector.SelectOptionDict(value="1", label="Tuesday"),
+    selector.SelectOptionDict(value="2", label="Wednesday"),
+    selector.SelectOptionDict(value="3", label="Thursday"),
+    selector.SelectOptionDict(value="4", label="Friday"),
+    selector.SelectOptionDict(value="5", label="Saturday"),
+    selector.SelectOptionDict(value="6", label="Sunday"),
 ]
 
 MONTH_OPTIONS = [
@@ -81,13 +83,13 @@ MONTH_OPTIONS = [
 ]
 
 SCHEDULE_OPTIONS = [
-    selector.SelectOptionDict(value=1, label="1st"),
-    selector.SelectOptionDict(value=2, label="2nd"),
-    selector.SelectOptionDict(value=3, label="3rd"),
-    selector.SelectOptionDict(value=4, label="4th"),
-    selector.SelectOptionDict(value=5, label="5th"),
-    selector.SelectOptionDict(value=-1, label="last"),
-    selector.SelectOptionDict(value=-2, label="2nd from last"),
-    selector.SelectOptionDict(value=-3, label="3rd from last"),
-    selector.SelectOptionDict(value=-4, label="4th from last"),
+    selector.SelectOptionDict(value="1", label="1st"),
+    selector.SelectOptionDict(value="2", label="2nd"),
+    selector.SelectOptionDict(value="3", label="3rd"),
+    selector.SelectOptionDict(value="4", label="4th"),
+    selector.SelectOptionDict(value="5", label="5th"),
+    selector.SelectOptionDict(value="-1", label="last"),
+    selector.SelectOptionDict(value="-2", label="2nd from last"),
+    selector.SelectOptionDict(value="-3", label="3rd from last"),
+    selector.SelectOptionDict(value="-4", label="4th from last"),
 ]

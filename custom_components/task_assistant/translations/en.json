@@ -12,7 +12,8 @@
                     "type": "Type - Every (repeat every [period] number of [frequency], After (set due date [period] number of [frequency] after last completion, Scheduled - Schedule task based on month and week.",
                     "schedule": "Schedule - Nth Weekday of month to repeat",
                     "schedule_day": "Schedule Day - Weekday of month to repeat",
-                    "start_date": "Start date"
+                    "start_date": "Start date",
+                    "offset": "Offset - Final offset for due date calculation"
                 }
             }
         },
@@ -39,7 +40,8 @@
                     "type": "Type - Every (repeat every [period] number of [frequency], After (set due date [period] number of [frequency] after last completion, Scheduled - Schedule task based on month and week.",
                     "schedule": "Schedule - Nth Weekday of month to repeat",
                     "schedule_day": "Schedule Day - Weekday of month to repeat",
-                    "start_date": "Start date"
+                    "start_date": "Start date",
+                    "offset": "Offset - Final offset for due date calculation"
                 }
             }
         },
